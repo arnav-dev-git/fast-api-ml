@@ -1,4 +1,5 @@
 from fastapi import Form, File, UploadFile, Request, FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from typing import Union, List
 from fastapi import FastAPI
 from io import BytesIO
@@ -21,9 +22,15 @@ app = FastAPI()
 # class InputImage(BaseModel):
     # input_image = None
 
-class Data(BaseModel):
-    image_src: str
-    output_name: str
+origins = ['*']
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+) 
 
 
 model = keras.models.load_model("./img_model")
