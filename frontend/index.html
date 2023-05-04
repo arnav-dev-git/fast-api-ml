@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>brightn.</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    
+    <!-- Navbar -->
+    <div class="header">
+        <div class="logo">
+          <h1><span style="color: greenyellow;">b</span>rightn.</h1>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <!-- Image Upload -->
+      <div class="image-upload">
+        <form method="post" enctype="multipart/form-data" onsubmit="submitHandler(event)">
+            <input type="file" value="image" id="file-input" accept="image/*" style="display:none" onchange="displayImage(this)">
+            <div type="submit" class="upload-label upload disabled" id="upload-button">Enhance Image</div>
+        </form>
+        <label for="file-input" class="upload-label">Choose Image</label>
+        <div class="drop-area">
+          <div class="drop-instruction">Drag and drop image here</div>
+        </div>        
+      </div>
+
+      <div class="image-preview-container">
+        <div id="image-preview" class="image-preview"></div>
+        <div id="image-preview-output" class="image-preview"></div>
+      </div>
+
+
+      <div>
+        <div class="upload-label upload" id="download-btn">Download Image</div>
+      </div>
+
+      <div class="footer">
+        <p class="footer-text">Made with ❤️</p>
+      </div>
+
+      <div class="loader-container" id="loader">
+        <div class="loader"></div>
+      </div>
+
+      <script src="script.js" type="text/javascript"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js" integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</body>
+</html>

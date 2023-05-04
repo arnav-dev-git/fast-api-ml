@@ -29,6 +29,6 @@ async def uploadImage(file):
                 'ContentType': file.content_type
             }
         )
-        return {"filename": file.filename}
+        return {"filename": file.filename, "content_type": file.content_type}
     except:
         return {"error": "Failed to upload file to DigitalOcean Spaces"}
