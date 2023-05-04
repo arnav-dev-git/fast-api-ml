@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>brightn.</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Comme:wght@100;200;300;400;500;600;700;800;900&display=swap");
+      body {
+        background: #222; /* min-height: 100vh; */ /* width: 100%; */
+        font-family: "Comme", sans-serif;
+      } /* Header styles */
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 80px;
+        padding: 0 20px;
+        background-color: #444;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+      }
+      .logo h1 {
+        margin: 0;
+        font-size: 28px;
+        font-weight: bold;
+        color: #fff;
+      }
+      nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+      }
+      nav li {
+        margin-right: 20px;
+      }
+      nav li:last-child {
+        margin-right: 0;
+      }
+      nav a {
+        text-decoration: none;
+        color: #fff;
+        font-size: 18px;
+        font-weight: bold;
+        transition: color 0.2s ease-in-out;
+      }
+      nav a:hover {
+        color: #ff6600;
+      } /* Image Upload */ /* Image upload styles */
+      .image-upload {
+        margin-top: 20px;
+      }
+      .active {
+        border-color: #007bff;
+      }
+      .upload-label {
+        display: inline-block;
+        padding: 10px 15px;
+        background-color: #ff6600;
+        color: #fff;
+        font-size: 18px;
+        font-weight: bold;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+      }
+      .upload-label:hover {
+        background-color: #cc5500;
+      }
+      .drop-area {
+        margin-top: 20px;
+        padding: 20px;
+        border: 2px dashed #ccc;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .drop-instruction {
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        color: #999;
+      } /* Image preview styles */
+      .image-preview {
+        margin-top: 20px;
+      }
+      .image-preview-container {
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 2px dashed #ddd;
+        padding: 20px;
+        margin-top: 20px;
+      }
+      .uploaded-image {
+        position: relative;
+        width: 300px;
+        max-height: 300px;
+        object-fit: contain;
+        margin-top: 10px;
+        margin-right: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        cursor: pointer;
+      } /* Upload Button */
+      .upload {
+        position: relative;
+        margin-top: 20px;
+        background: rgb(85, 156, 85);
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .upload:hover {
+        background: rgb(101, 188, 101);
+      }
+      .disabled {
+        background: #ccc;
+        cursor: default;
+      }
+      .disabled:hover {
+        background: #ccc;
+      } /* Download Button */
+      #download-btn {
+        display: none;
+        background: rgb(72, 143, 200);
+        width: 300px;
+        text-align: center;
+      } /* Set up the container for the loader */
+      #loader {
+        display: none;
+      }
+      .loader-container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #0009;
+      } /* Create the circular loader */
+      .loader {
+        width: 100px;
+        height: 100px;
+        border: 5px solid #ccc;
+        border-top-color: #333;
+        border-radius: 50%;
+        animation: spin 1s ease-in-out infinite;
+      } /* Define the animation */
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      } /* Footer */
+      .footer {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .footer-text {
+        font-size: 18px;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <div class="header">
+      <div class="logo">
+        <h1><span style="color: greenyellow">b</span>rightn.</h1>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+        </ul>
+      </nav>
+    </div>
+    <!-- Image Upload -->
+    <div class="image-upload">
+      <form
+        method="post"
+        enctype="multipart/form-data"
+        onsubmit="submitHandler(event)"
+      >
+        <input
+          type="file"
+          value="image"
+          id="file-input"
+          accept="image/*"
+          style="display: none"
+          onchange="displayImage(this)"
+        />
+        <div
+          type="submit"
+          class="upload-label upload disabled"
+          id="upload-button"
+        >
+          Enhance Image
+        </div>
+      </form>
+      <label for="file-input" class="upload-label">Choose Image</label>
+      <div class="drop-area">
+        <div class="drop-instruction">Drag and drop image here</div>
+      </div>
+    </div>
+    <div class="image-preview-container">
+      <div id="image-preview" class="image-preview"></div>
+      <div id="image-preview-output" class="image-preview"></div>
+    </div>
+    <div>
+      <div class="upload-label upload" id="download-btn">Download Image</div>
+    </div>
+    <div class="footer"><p class="footer-text">Made with ❤️</p></div>
+    <div class="loader-container" id="loader"><div class="loader"></div></div>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
+      integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script>
+      let image_to_upload = null;
+      let download_link = null;
+      const imageUpload = document.querySelector(".image-upload");
+      const drag_drop_div = document.querySelector(".drop-area");
+      const uploadButton = document.querySelector("#upload-button");
+      const downloadButton = document.querySelector("#download-btn");
+
+      imageUpload.addEventListener("dragover", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        imageUpload.classList.add("active");
+      });
+
+      imageUpload.addEventListener("dragleave", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        imageUpload.classList.remove("active");
+      });
+
+      imageUpload.addEventListener("drop", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        removeAllImages();
+
+        imageUpload.classList.remove("active");
+        const files = e.dataTransfer;
+        displayImage(files);
+      });
+
+      function displayImage(input) {
+        removeAllImages();
+        if (input.files && input.files[0]) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            const img = document.createElement("img");
+            img.src = e.target.result;
+            image_to_upload = e.target.result;
+            img.classList.add("uploaded-image");
+            document.getElementById("image-preview").appendChild(img);
+            uploadButton.classList.remove("disabled");
+            uploadButton.style.right = 0;
+          };
+          reader.readAsDataURL(input.files[0]);
+        }
+      }
+
+      function displayOutputImage(output_img_link) {
+        const img = document.createElement("img");
+        img.src = output_img_link;
+        img.classList.add("uploaded-image");
+        document.getElementById("image-preview-output").appendChild(img);
+      }
+
+      async function uploadImage(image) {
+        // const url_upload_image = "http://localhost:8000/upload-image";
+        const url_upload_image = "http://188.166.207.3/upload-image";
+        // const url_process_image = "http://localhost:8000/process-image";
+        const url_process_image = "http://188.166.207.3/process-image";
+
+        document.getElementById("loader").style.display = "flex";
+
+        var formData = new FormData();
+        let fileInput = document.querySelector("#file-input");
+        formData.append("image", fileInput.files[0]);
+
+        const result = await axios.post(url_upload_image, formData);
+        // console.log("Result => ", result.data);
+
+        const output = await axios.post(url_process_image, {
+          image_src: result.data.filename,
+          output_name: `${uniqueId()}.png`,
+        });
+        // console.log("Output => ", output.data);
+
+        download_link =
+          "https://image-auto-enhance-brightness-ml.sgp1.digitaloceanspaces.com/" +
+          output.data.filename;
+
+        displayOutputImage(download_link);
+
+        document.getElementById("loader").style.display = "none";
+        document.querySelector("#download-btn").style.display = "block";
+      }
+
+      uploadButton.onclick = function () {
+        if (!image_to_upload) {
+          return;
+        }
+        uploadImage("URL");
+      };
+
+      downloadButton.onclick = () => {
+        if (!download_link) return;
+        const a = document.createElement("A");
+        a.href = download_link;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      };
+
+      function removeAllImages() {
+        const images = document.getElementsByTagName("img");
+        const l = images.length;
+        for (let i = 0; i < l; i++) {
+          images[0].parentNode.removeChild(images[0]);
+        }
+      }
+
+      function uniqueId() {
+        const dateString = Date.now().toString(36);
+        const randomness = Math.random().toString(36).substr(2);
+        return dateString + randomness;
+      }
+    </script>
+  </body>
+</html>

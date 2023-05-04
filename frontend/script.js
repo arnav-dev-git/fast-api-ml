@@ -54,8 +54,10 @@ function displayOutputImage(output_img_link) {
 }
 
 async function uploadImage(image) {
-  const url_upload_image = "http://localhost:8000/upload-image";
-  const url_process_image = "http://localhost:8000/process-image";
+  // const url_upload_image = "http://localhost:8000/upload-image";
+  const url_upload_image = "http://188.166.207.3/upload-image";
+  // const url_process_image = "http://localhost:8000/process-image";
+  const url_process_image = "http://188.166.207.3/process-image";
 
   document.getElementById("loader").style.display = "flex";
 
