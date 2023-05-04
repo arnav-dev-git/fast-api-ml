@@ -5,8 +5,6 @@ from fastapi import FastAPI
 from io import BytesIO
 import tensorflow as tf
 from tensorflow import keras
-# from starlette.requests import Request
-# from PIL import Image
 
 import os
 from dotenv import load_dotenv

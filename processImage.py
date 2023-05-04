@@ -160,4 +160,4 @@ def processImage(_model, image_src, output_name):
     time_diff = end_time - start_time
     print("Time Taken (seconds): ", time_diff.total_seconds())
 
-    return {"filename": output_name}
+    return {"filename": str(output_name)}
