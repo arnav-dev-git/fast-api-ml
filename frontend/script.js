@@ -7,7 +7,7 @@ const downloadButton = document.querySelector("#download-btn");
 const about = document.querySelector("#about");
 const aboutModal = document.querySelector(".about-modal");
 const aboutModalCloseButton = document.querySelector(".close-btn");
-
+const errorAlert = document.querySelector(".error-alert");
 
 imageUpload.addEventListener("dragover", function (e) {
   e.preventDefault();
@@ -34,7 +34,7 @@ imageUpload.addEventListener("drop", function (e) {
 
 function displayImage(input) {
   removeAllImages();
-  drag_drop_div.style.padding = '20px';
+  drag_drop_div.style.padding = "20px";
   if (input.files && input.files[0]) {
     image_to_upload = input.files[0];
     const reader = new FileReader();
@@ -64,26 +64,37 @@ async function uploadImage(image) {
   const url_process_image = "http://188.166.207.3/process-image";
 
   document.getElementById("loader").style.display = "flex";
+  errorAlert.style.display = 'none';
 
-  var formData = new FormData();
-  let fileInput = document.querySelector("#file-input");
-  formData.append("image", image_to_upload);
+  try {
+    var formData = new FormData();
+    let fileInput = document.querySelector("#file-input");
+    const renamedFile = new File([image_to_upload], uniqueId());
+    // formData.append("image", image_to_upload);
+    formData.append("image", renamedFile);
 
-  const result = await axios.post(url_upload_image, formData);
-  // console.log("Result => ", result.data);
+    const result = await axios.post(url_upload_image, formData);
+    // console.log("Result => ", result.data);
 
-  const output = await axios.post(url_process_image, {
-    image_src: result.data.filename,
-    output_name: `${uniqueId()}.png`,
-  });
-  // console.log("Output => ", output.data);
+    const output = await axios.post(url_process_image, {
+      image_src: result.data.filename,
+      output_name: `${uniqueId()}.png`,
+    });
+    // console.log("Output => ", output.data);
 
-  download_link = "https://image-auto-enhance-brightness-ml.sgp1.digitaloceanspaces.com/" + output.data.filename;
+    download_link =
+      "https://image-auto-enhance-brightness-ml.sgp1.digitaloceanspaces.com/" +
+      output.data.filename;
 
-  displayOutputImage(download_link);  
+    displayOutputImage(download_link);
 
-  document.getElementById("loader").style.display = "none";
-  document.querySelector("#download-btn").style.display = 'block';
+    document.getElementById("loader").style.display = "none";
+    document.querySelector("#download-btn").style.display = "block";
+  } catch (err) {
+    console.log("Error: ", err);
+    errorAlert.style.display = 'block';
+    document.getElementById("loader").style.display = "none";
+  }
 }
 
 uploadButton.onclick = function () {
@@ -92,25 +103,25 @@ uploadButton.onclick = function () {
   }
   // uploadImage("URL");
   uploadImage(image_to_upload);
-}
+};
 
 downloadButton.onclick = () => {
-  if(!download_link) return;
-  const a = document.createElement('A');
+  if (!download_link) return;
+  const a = document.createElement("A");
   a.href = download_link;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
-}
+};
 
 about.onclick = (e) => {
   e.preventDefault();
-  aboutModal.classList.remove('no-display');
-}
+  aboutModal.classList.remove("no-display");
+};
 
 aboutModalCloseButton.onclick = (e) => {
-  aboutModal.classList.add('no-display');
-}
+  aboutModal.classList.add("no-display");
+};
 
 function removeAllImages() {
   const images = document.getElementsByTagName("img");
