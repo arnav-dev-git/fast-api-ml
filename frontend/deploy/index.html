@@ -6,345 +6,493 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>brightn.</title>
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Comme:wght@100;200;300;400;500;600;700;800;900&display=swap");
-      body {
-        background: #222; /* min-height: 100vh; */ /* width: 100%; */
-        font-family: "Comme", sans-serif;
-      } /* Header styles */
-      .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        height: 80px;
-        padding: 0 20px;
-        background-color: #444;
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-      }
-      .logo h1 {
-        margin: 0;
-        font-size: 28px;
-        font-weight: bold;
-        color: #fff;
-      }
-      nav ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: flex;
-      }
-      nav li {
-        margin-right: 20px;
-      }
-      nav li:last-child {
-        margin-right: 0;
-      }
-      nav a {
-        text-decoration: none;
-        color: #fff;
-        font-size: 18px;
-        font-weight: bold;
-        transition: color 0.2s ease-in-out;
-      }
-      nav a:hover {
-        color: #ff6600;
-      } /* Image Upload */ /* Image upload styles */
-      .image-upload {
-        margin-top: 20px;
-      }
-      .active {
-        border-color: #007bff;
-      }
-      .upload-label {
-        display: inline-block;
-        padding: 10px 15px;
-        background-color: #ff6600;
-        color: #fff;
-        font-size: 18px;
-        font-weight: bold;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.2s ease-in-out;
-      }
-      .upload-label:hover {
-        background-color: #cc5500;
-      }
-      .drop-area {
-        margin-top: 20px;
-        padding: 20px;
-        border: 2px dashed #ccc;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-      .drop-instruction {
-        font-size: 16px;
-        font-weight: bold;
-        text-align: center;
-        color: #999;
-      } /* Image preview styles */
-      .image-preview {
-        margin-top: 20px;
-      }
-      .image-preview-container {
-        padding: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border: 2px dashed #ddd;
-        padding: 20px;
-        margin-top: 20px;
-      }
-      .uploaded-image {
-        position: relative;
-        width: 300px;
-        max-height: 300px;
-        object-fit: contain;
-        margin-top: 10px;
-        margin-right: 5px;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-        border-radius: 5px;
-        cursor: pointer;
-      } /* Upload Button */
-      .upload {
-        position: relative;
-        margin-top: 20px;
-        background: rgb(85, 156, 85);
-        left: 50%;
-        transform: translateX(-50%);
-      }
-      .upload:hover {
-        background: rgb(101, 188, 101);
-      }
-      .disabled {
-        background: #ccc;
-        cursor: default;
-      }
-      .disabled:hover {
-        background: #ccc;
-      } /* Download Button */
-      #download-btn {
-        display: none;
-        background: rgb(72, 143, 200);
-        width: 300px;
-        text-align: center;
-      } /* Set up the container for the loader */
-      #loader {
-        display: none;
-      }
-      .loader-container {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: #0009;
-      } /* Create the circular loader */
-      .loader {
-        width: 100px;
-        height: 100px;
-        border: 5px solid #ccc;
-        border-top-color: #333;
-        border-radius: 50%;
-        animation: spin 1s ease-in-out infinite;
-      } /* Define the animation */
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      } /* Footer */
-      .footer {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 50px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      .footer-text {
-        font-size: 18px;
-        color: #fff;
-      }
+     @import url("https://fonts.googleapis.com/css2?family=Comme:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+body {
+  background: #222;
+  /* min-height: 100vh; */
+  /* width: 100%; */
+  font-family: "Comme", sans-serif;
+}
+
+/* Header styles */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  padding: 0 20px;
+  background-color: #444;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.logo h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: bold;
+  color: #fff;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+nav li {
+  margin-right: 20px;
+}
+
+nav li:last-child {
+  margin-right: 0;
+}
+
+nav a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  transition: color 0.2s ease-in-out;
+}
+
+nav a:hover {
+  color: #ff6600;
+}
+
+/* Image Upload */
+
+/* Image upload styles */
+
+.image-upload {
+  margin-top: 20px;
+}
+
+.active {
+  border-color: #007bff;
+}
+
+.upload-label {
+  display: inline-block;
+  padding: 10px 15px;
+  background-color: #ff6600;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.upload-label:hover {
+  background-color: #cc5500;
+}
+
+.drop-area {
+  margin-top: 20px;
+  padding: 80px;
+  border: 2px dashed #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.drop-instruction {
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  color: #999;
+}
+
+/* Image preview styles */
+
+.image-preview {
+  margin-top: 20px;
+}
+
+.image-preview-container {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px dashed #ddd;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.uploaded-image {
+  position: relative;
+  width: 300px;
+  max-height: 300px;
+  object-fit: contain;
+  margin-top: 10px;
+  margin-right: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Upload Button */
+
+.upload {
+  position: relative;
+  margin-top: 20px;
+  background: rgb(85, 156, 85);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.upload:hover {
+  background: rgb(101, 188, 101);
+}
+
+.disabled {
+  background: #ccc;
+  cursor: default;
+}
+
+.disabled:hover {
+  background: #ccc;
+}
+
+/* Download Button */
+#download-btn {
+  display: none;
+  background: rgb(72, 143, 200);
+  width: 300px;
+  text-align: center;
+}
+
+/* Set up the container for the loader */
+
+#loader {
+  display: none;
+}
+
+.loader-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0009;
+}
+
+/* Create the circular loader */
+.loader {
+  width: 100px;
+  height: 100px;
+  border: 5px solid #ccc;
+  border-top-color: #333;
+  border-radius: 50%;
+  animation: spin 1s ease-in-out infinite;
+}
+
+/* Define the animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Footer */
+
+.footer {
+  position: relative;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.footer-text {
+  font-size: 18px;
+  color: #fff;
+}
+
+.about-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.about-modal-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  max-width: 500px;
+  background: black;
+  padding: 40px;
+  border-radius: 12px;
+}
+
+.about-heading {
+  font-size: 24px;
+  font-weight: bold;
+  color: rgb(85, 156, 85);
+  margin-bottom: 20px;
+}
+
+.about-body {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #fff;
+  text-align: center;
+}
+
+.close-btn {
+  font-size: 40px;
+  color: #ff2b2b;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-weight: 200;
+  transform: scaleX(1.4);
+  cursor: pointer;
+}
+
+.no-display{
+  display: none;
+}
+
+.padding{
+  margin-left: 5%;
+  margin-right: 5%;
+}
     </style>
   </head>
   <body>
-    <!-- Navbar -->
-    <div class="header">
-      <div class="logo">
-        <h1><span style="color: greenyellow">b</span>rightn.</h1>
-      </div>
-      <nav>
-        <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">About</a></li>
-        </ul>
-      </nav>
+  <!-- Navbar -->
+  <div class="header">
+    <div class="logo">
+      <h1><span style="color: greenyellow">b</span>rightn.</h1>
     </div>
-    <!-- Image Upload -->
-    <div class="image-upload">
-      <form
-        method="post"
-        enctype="multipart/form-data"
-        onsubmit="submitHandler(event)"
+    <nav>
+      <ul>
+        <li><a href="" id="about">About</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- Image Upload -->
+  <div class="image-upload padding">
+    <form
+      method="post"
+      enctype="multipart/form-data"
+      onsubmit="submitHandler(event)"
+    >
+      <input
+        type="file"
+        value="image"
+        id="file-input"
+        accept="image/*"
+        style="display: none"
+        onchange="displayImage(this)"
+      />
+      <div
+        type="submit"
+        class="upload-label upload disabled"
+        id="upload-button"
       >
-        <input
-          type="file"
-          value="image"
-          id="file-input"
-          accept="image/*"
-          style="display: none"
-          onchange="displayImage(this)"
-        />
-        <div
-          type="submit"
-          class="upload-label upload disabled"
-          id="upload-button"
-        >
-          Enhance Image
-        </div>
-      </form>
-      <label for="file-input" class="upload-label">Choose Image</label>
-      <div class="drop-area">
-        <div class="drop-instruction">Drag and drop image here</div>
+        Enhance Image
       </div>
+    </form>
+    <label for="file-input" class="upload-label">Choose Image</label>
+    <div class="drop-area">
+      <div class="drop-instruction">Drag and drop image here</div>
     </div>
-    <div class="image-preview-container">
-      <div id="image-preview" class="image-preview"></div>
-      <div id="image-preview-output" class="image-preview"></div>
+  </div>
+
+  <div class="image-preview-container padding">
+    <div id="image-preview" class="image-preview"></div>
+    <div id="image-preview-output" class="image-preview"></div>
+  </div>
+
+  <div>
+    <div class="upload-label upload padding" id="download-btn">Download Image</div>
+  </div>
+
+  <div class="footer">
+    <p class="footer-text">Made with ❤️</p>
+  </div>
+
+  <div class="about-modal no-display">
+    <div class="about-modal-container">
+      <div class="about-heading">About The App</div>
+      <div class="about-body">
+        Introducing our new app, "Brightn"! Have you ever struggled to capture
+        the perfect photo in low light conditions? With Brightn, you no longer
+        have to worry about dark and blurry photos. Using state-of-the-art
+        machine learning algorithms, our app enhances low light images by
+        automatically adjusting the brightness, contrast, and color balance,
+        resulting in a brighter and clearer image. Simply upload your low
+        light photo, and within seconds, the app will provide you with a
+        stunning, high-quality image that you'll be proud to share with your
+        friends and family. Say goodbye to grainy and poorly lit photos and
+        say hello to Brightn!
+      </div>
+      <div class="close-btn">X</div>
     </div>
-    <div>
-      <div class="upload-label upload" id="download-btn">Download Image</div>
-    </div>
-    <div class="footer"><p class="footer-text">Made with ❤️</p></div>
-    <div class="loader-container" id="loader"><div class="loader"></div></div>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
-      integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
+  </div>
+
+  <div class="loader-container" id="loader">
+    <div class="loader"></div>
+  </div>
+
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
+    integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
     <script>
-      let image_to_upload = null;
-      let download_link = null;
-      const imageUpload = document.querySelector(".image-upload");
-      const drag_drop_div = document.querySelector(".drop-area");
-      const uploadButton = document.querySelector("#upload-button");
-      const downloadButton = document.querySelector("#download-btn");
+     let image_to_upload = null;
+let download_link = null;
+const imageUpload = document.querySelector(".image-upload");
+const drag_drop_div = document.querySelector(".drop-area");
+const uploadButton = document.querySelector("#upload-button");
+const downloadButton = document.querySelector("#download-btn");
+const about = document.querySelector("#about");
+const aboutModal = document.querySelector(".about-modal");
+const aboutModalCloseButton = document.querySelector(".close-btn");
 
-      imageUpload.addEventListener("dragover", function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        imageUpload.classList.add("active");
-      });
 
-      imageUpload.addEventListener("dragleave", function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        imageUpload.classList.remove("active");
-      });
+imageUpload.addEventListener("dragover", function (e) {
+  e.preventDefault();
+  e.stopPropagation();
+  imageUpload.classList.add("active");
+});
 
-      imageUpload.addEventListener("drop", function (e) {
-        e.preventDefault();
-        e.stopPropagation();
+imageUpload.addEventListener("dragleave", function (e) {
+  e.preventDefault();
+  e.stopPropagation();
+  imageUpload.classList.remove("active");
+});
 
-        removeAllImages();
+imageUpload.addEventListener("drop", function (e) {
+  e.preventDefault();
+  e.stopPropagation();
 
-        imageUpload.classList.remove("active");
-        const files = e.dataTransfer;
-        displayImage(files);
-      });
+  removeAllImages();
 
-      function displayImage(input) {
-        removeAllImages();
-        if (input.files && input.files[0]) {
-          const reader = new FileReader();
-          reader.onload = function (e) {
-            const img = document.createElement("img");
-            img.src = e.target.result;
-            image_to_upload = e.target.result;
-            img.classList.add("uploaded-image");
-            document.getElementById("image-preview").appendChild(img);
-            uploadButton.classList.remove("disabled");
-            uploadButton.style.right = 0;
-          };
-          reader.readAsDataURL(input.files[0]);
-        }
-      }
+  imageUpload.classList.remove("active");
+  const files = e.dataTransfer;
+  displayImage(files);
+});
 
-      function displayOutputImage(output_img_link) {
-        const img = document.createElement("img");
-        img.src = output_img_link;
-        img.classList.add("uploaded-image");
-        document.getElementById("image-preview-output").appendChild(img);
-      }
+function displayImage(input) {
+  removeAllImages();
+  drag_drop_div.style.padding = '20px';
+  if (input.files && input.files[0]) {
+    image_to_upload = input.files[0];
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const img = document.createElement("img");
+      img.src = e.target.result;
+      img.classList.add("uploaded-image");
+      document.getElementById("image-preview").appendChild(img);
+      uploadButton.classList.remove("disabled");
+      uploadButton.style.right = 0;
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
 
-      async function uploadImage(image) {
-        // const url_upload_image = "http://localhost:8000/upload-image";
-        const url_upload_image = "http://188.166.207.3/upload-image";
-        // const url_process_image = "http://localhost:8000/process-image";
-        const url_process_image = "http://188.166.207.3/process-image";
+function displayOutputImage(output_img_link) {
+  const img = document.createElement("img");
+  img.src = output_img_link;
+  img.classList.add("uploaded-image");
+  document.getElementById("image-preview-output").appendChild(img);
+}
 
-        document.getElementById("loader").style.display = "flex";
+async function uploadImage(image) {
+  // const url_upload_image = "http://localhost:8000/upload-image";
+  const url_upload_image = "http://188.166.207.3/upload-image";
+  // const url_process_image = "http://localhost:8000/process-image";
+  const url_process_image = "http://188.166.207.3/process-image";
 
-        var formData = new FormData();
-        let fileInput = document.querySelector("#file-input");
-        formData.append("image", fileInput.files[0]);
+  document.getElementById("loader").style.display = "flex";
 
-        const result = await axios.post(url_upload_image, formData);
-        // console.log("Result => ", result.data);
+  var formData = new FormData();
+  let fileInput = document.querySelector("#file-input");
+  formData.append("image", image_to_upload);
 
-        const output = await axios.post(url_process_image, {
-          image_src: result.data.filename,
-          output_name: `${uniqueId()}.png`,
-        });
-        // console.log("Output => ", output.data);
+  const result = await axios.post(url_upload_image, formData);
+  // console.log("Result => ", result.data);
 
-        download_link =
-          "https://image-auto-enhance-brightness-ml.sgp1.digitaloceanspaces.com/" +
-          output.data.filename;
+  const output = await axios.post(url_process_image, {
+    image_src: result.data.filename,
+    output_name: `${uniqueId()}.png`,
+  });
+  // console.log("Output => ", output.data);
 
-        displayOutputImage(download_link);
+  download_link = "https://image-auto-enhance-brightness-ml.sgp1.digitaloceanspaces.com/" + output.data.filename;
 
-        document.getElementById("loader").style.display = "none";
-        document.querySelector("#download-btn").style.display = "block";
-      }
+  displayOutputImage(download_link);  
 
-      uploadButton.onclick = function () {
-        if (!image_to_upload) {
-          return;
-        }
-        uploadImage("URL");
-      };
+  document.getElementById("loader").style.display = "none";
+  document.querySelector("#download-btn").style.display = 'block';
+}
 
-      downloadButton.onclick = () => {
-        if (!download_link) return;
-        const a = document.createElement("A");
-        a.href = download_link;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-      };
+uploadButton.onclick = function () {
+  if (!image_to_upload) {
+    return;
+  }
+  // uploadImage("URL");
+  uploadImage(image_to_upload);
+}
 
-      function removeAllImages() {
-        const images = document.getElementsByTagName("img");
-        const l = images.length;
-        for (let i = 0; i < l; i++) {
-          images[0].parentNode.removeChild(images[0]);
-        }
-      }
+downloadButton.onclick = () => {
+  if(!download_link) return;
+  const a = document.createElement('A');
+  a.href = download_link;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
 
-      function uniqueId() {
-        const dateString = Date.now().toString(36);
-        const randomness = Math.random().toString(36).substr(2);
-        return dateString + randomness;
-      }
+about.onclick = (e) => {
+  e.preventDefault();
+  aboutModal.classList.remove('no-display');
+}
 
+aboutModalCloseButton.onclick = (e) => {
+  aboutModal.classList.add('no-display');
+}
+
+function removeAllImages() {
+  const images = document.getElementsByTagName("img");
+  const l = images.length;
+  for (let i = 0; i < l; i++) {
+    images[0].parentNode.removeChild(images[0]);
+  }
+}
+
+function uniqueId() {
+  const dateString = Date.now().toString(36);
+  const randomness = Math.random().toString(36).substr(2);
+  return dateString + randomness;
+}
     </script>
   </body>
 </html>

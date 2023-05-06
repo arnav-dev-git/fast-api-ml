@@ -4,6 +4,9 @@ const imageUpload = document.querySelector(".image-upload");
 const drag_drop_div = document.querySelector(".drop-area");
 const uploadButton = document.querySelector("#upload-button");
 const downloadButton = document.querySelector("#download-btn");
+const about = document.querySelector("#about");
+const aboutModal = document.querySelector(".about-modal");
+const aboutModalCloseButton = document.querySelector(".close-btn");
 
 
 imageUpload.addEventListener("dragover", function (e) {
@@ -31,12 +34,13 @@ imageUpload.addEventListener("drop", function (e) {
 
 function displayImage(input) {
   removeAllImages();
+  drag_drop_div.style.padding = '20px';
   if (input.files && input.files[0]) {
+    image_to_upload = input.files[0];
     const reader = new FileReader();
     reader.onload = function (e) {
       const img = document.createElement("img");
       img.src = e.target.result;
-      image_to_upload = e.target.result;
       img.classList.add("uploaded-image");
       document.getElementById("image-preview").appendChild(img);
       uploadButton.classList.remove("disabled");
@@ -63,7 +67,7 @@ async function uploadImage(image) {
 
   var formData = new FormData();
   let fileInput = document.querySelector("#file-input");
-  formData.append("image", fileInput.files[0]);
+  formData.append("image", image_to_upload);
 
   const result = await axios.post(url_upload_image, formData);
   // console.log("Result => ", result.data);
@@ -86,8 +90,9 @@ uploadButton.onclick = function () {
   if (!image_to_upload) {
     return;
   }
-  uploadImage("URL");
-};
+  // uploadImage("URL");
+  uploadImage(image_to_upload);
+}
 
 downloadButton.onclick = () => {
   if(!download_link) return;
@@ -98,6 +103,14 @@ downloadButton.onclick = () => {
   document.body.removeChild(a);
 }
 
+about.onclick = (e) => {
+  e.preventDefault();
+  aboutModal.classList.remove('no-display');
+}
+
+aboutModalCloseButton.onclick = (e) => {
+  aboutModal.classList.add('no-display');
+}
 
 function removeAllImages() {
   const images = document.getElementsByTagName("img");
@@ -107,9 +120,8 @@ function removeAllImages() {
   }
 }
 
-
 function uniqueId() {
   const dateString = Date.now().toString(36);
   const randomness = Math.random().toString(36).substr(2);
   return dateString + randomness;
-};
+}

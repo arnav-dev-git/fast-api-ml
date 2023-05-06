@@ -1,58 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>brightn.</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-    
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
     <!-- Navbar -->
     <div class="header">
-        <div class="logo">
-          <h1><span style="color: greenyellow;">b</span>rightn.</h1>
+      <div class="logo">
+        <h1><span style="color: greenyellow">b</span>rightn.</h1>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="" id="about">About</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="error-alert">
+      <p>Oops! An error occurred.</p>
+    </div>
+
+    <!-- Image Upload -->
+    <div class="image-upload padding">
+      <form
+        method="post"
+        enctype="multipart/form-data"
+        onsubmit="submitHandler(event)"
+      >
+        <input
+          type="file"
+          value="image"
+          id="file-input"
+          accept="image/*"
+          style="display: none"
+          onchange="displayImage(this)"
+        />
+        <div
+          type="submit"
+          class="upload-label upload disabled"
+          id="upload-button"
+        >
+          Enhance Image
         </div>
-        <nav>
-          <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-          </ul>
-        </nav>
+      </form>
+      <label for="file-input" class="upload-label">Choose Image</label>
+      <div class="drop-area">
+        <div class="drop-instruction">Drag and drop image here</div>
       </div>
+    </div>
 
-      <!-- Image Upload -->
-      <div class="image-upload">
-        <form method="post" enctype="multipart/form-data" onsubmit="submitHandler(event)">
-            <input type="file" value="image" id="file-input" accept="image/*" style="display:none" onchange="displayImage(this)">
-            <div type="submit" class="upload-label upload disabled" id="upload-button">Enhance Image</div>
-        </form>
-        <label for="file-input" class="upload-label">Choose Image</label>
-        <div class="drop-area">
-          <div class="drop-instruction">Drag and drop image here</div>
-        </div>        
+    <div class="image-preview-container padding">
+      <div id="image-preview" class="image-preview"></div>
+      <div id="image-preview-output" class="image-preview"></div>
+    </div>
+
+    <div>
+      <div class="upload-label upload" id="download-btn">Download Image</div>
+    </div>
+
+    <div class="footer">
+      <p class="footer-text">Made with ❤️</p>
+    </div>
+
+    <div class="about-modal no-display">
+      <div class="about-modal-container">
+        <div class="about-heading">About The App</div>
+        <div class="about-body">
+          Introducing our new app, "Brightn"! Have you ever struggled to capture
+          the perfect photo in low light conditions? With Brightn, you no longer
+          have to worry about dark and blurry photos. Using state-of-the-art
+          machine learning algorithms, our app enhances low light images by
+          automatically adjusting the brightness, contrast, and color balance,
+          resulting in a brighter and clearer image. Simply upload your low
+          light photo, and within seconds, the app will provide you with a
+          stunning, high-quality image that you'll be proud to share with your
+          friends and family. Say goodbye to grainy and poorly lit photos and
+          say hello to Brightn!
+        </div>
+        <div class="close-btn">X</div>
       </div>
+    </div>
 
-      <div class="image-preview-container">
-        <div id="image-preview" class="image-preview"></div>
-        <div id="image-preview-output" class="image-preview"></div>
-      </div>
+    <div class="loader-container" id="loader">
+      <div class="loader"></div>
+    </div>
 
-
-      <div>
-        <div class="upload-label upload" id="download-btn">Download Image</div>
-      </div>
-
-      <div class="footer">
-        <p class="footer-text">Made with ❤️</p>
-      </div>
-
-      <div class="loader-container" id="loader">
-        <div class="loader"></div>
-      </div>
-
-      <script src="script.js" type="text/javascript"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js" integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-</body>
+    <script src="script.js" type="text/javascript"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
+      integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </body>
 </html>
